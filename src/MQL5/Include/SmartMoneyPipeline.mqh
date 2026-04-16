@@ -446,8 +446,9 @@ public:
         return true;
     }
 
-    bool Scan(SM_SignalContext &context)
+    bool Scan(SM_SignalContext &context, bool &bar_updated)
     {
+        bar_updated = false;
         datetime bar_time = iTime(m_symbol, m_timeframe, 0);
         if (bar_time <= 0 || bar_time == m_last_bar_time)
         {
@@ -455,10 +456,21 @@ public:
         }
 
         m_last_bar_time = bar_time;
+        bar_updated = true;
         context.symbol = m_symbol;
         context.timeframe = m_timeframe;
         context.valid = false;
         return m_composer.Compose(context);
+    }
+
+    string Symbol()
+    {
+        return m_symbol;
+    }
+
+    ENUM_TIMEFRAMES Timeframe()
+    {
+        return m_timeframe;
     }
 
     void Deinit()
