@@ -27,6 +27,15 @@ if ($platform -ne "mt5") {
     throw "Backtest script currently supports MQL5 only. Terminal 'test' is '$platform'. Install MT5 (MQL5)."
 }
 
+
+$indicatorsRoot = Join-Path (Get-SourceRoot) "Indicators"
+if (Test-Path -LiteralPath $indicatorsRoot) {
+    $indicatorSources = Get-ChildItem -LiteralPath $indicatorsRoot -Filter "*.mq5" -File
+    foreach ($indicatorSource in $indicatorSources) {
+        & (Join-Path $PSScriptRoot "build.ps1") -Source $indicatorSource.FullName -Terminal test
+    }
+}
+
 $sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq5" -f $Expert)
 & (Join-Path $PSScriptRoot "build.ps1") -Source $sourceFile -Terminal test
 

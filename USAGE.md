@@ -29,6 +29,32 @@
 
 `powershell -ExecutionPolicy Bypass -File scripts/demo-launch.ps1 -Expert SmartMoneyEA -Symbol EURUSD -Period H1 -SetFile SmartMoneyEA.set -Login <LOGIN> -Server <SERVER> -Password <PASSWORD>`
 
+## 3.1) Готовые launcher-скрипты
+
+Для быстрого запуска без ручного ввода параметров используйте:
+
+- Ручной терминал с прикрепленным EA:
+  - `powershell -ExecutionPolicy Bypass -File scripts/launchers/manual-smartmoneyea.ps1`
+- Преднастроенный автотест:
+  - `powershell -ExecutionPolicy Bypass -File scripts/launchers/autotest-smartmoneyea.ps1`
+
+Оба launcher-скрипта берут `MT5_LOGIN`, `MT5_SERVER`, `MT5_PASSWORD` из `.env`.
+
+Для удобного запуска двойным кликом доступны `.bat`-обертки в `run` с понятными именами:
+
+- `manual__smartmoneyea__v1__demo.bat`
+- `manual__smartmoneyea__v1__multitf.bat`
+- `testerui__smartmoneyea__v1__eurusd_h1.bat`
+- `testervisual__smartmoneyea__v1__eurusd_h1_2024.bat`
+
+`testerui__...` открывает `mt5-test`, подготавливает сборку/пресет и оставляет запуск теста вручную в Strategy Tester (Ctrl+R).
+`testervisual__...` сразу открывает Visual Tester с уже выбранным `SmartMoneyEA` и заданными параметрами.
+
+В `manual__...` режиме на графике EA:
+- показывает dashboard со статусами по отслеживаемым `symbol/timeframe`;
+- подсвечивает строки с сигналами;
+- позволяет кликнуть по строке dashboard и открыть соответствующий график с индикатором `SmartMoneyZones`.
+
 ## 4) Через VSCode Tasks
 
 Используйте задачи из `.vscode/tasks.json`:
