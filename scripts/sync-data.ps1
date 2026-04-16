@@ -20,14 +20,14 @@ switch ($Source) {
         Assert-TerminalInstalled -Terminal "dev"
         $candidates = @(
             @{ From = Join-Path $sourceRoot "history"; To = Join-Path $targetRoot "history" },
-            @{ From = Join-Path $sourceRoot "tester/history"; To = Join-Path $targetRoot "tester/history" }
+            @{ From = Join-Path $sourceRoot "Tester/history"; To = Join-Path $targetRoot "Tester/history" }
         )
     }
     "import" {
         $projectRoot = Get-ProjectRoot
         $candidates = @(
             @{ From = Join-Path $projectRoot ("data/import/" + $Symbol); To = Join-Path $targetRoot "history/import" },
-            @{ From = Join-Path $projectRoot ("data/ticks/" + $Symbol); To = Join-Path $targetRoot "tester/history" }
+            @{ From = Join-Path $projectRoot ("data/ticks/" + $Symbol); To = Join-Path $targetRoot "Tester/history" }
         )
     }
 }

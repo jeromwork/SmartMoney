@@ -17,11 +17,15 @@ $mappings = @(
     @{ Source = Join-Path $terminalRoot "MQL5/Logs"; Destination = "logs/experts" }
 )
 
+$copied = @{}
 foreach ($mapping in $mappings) {
     $latest = Get-LatestFile -Path $mapping.Source -Filter "*.log"
     if ($latest) {
         $target = Get-ArtifactPath -RelativePath ("{0}/{1}-{2}" -f $mapping.Destination, $Terminal, $latest.Name)
-        Copy-Item -LiteralPath $latest.FullName -Destination $target -Force
-        Write-Host "Collected: $target"
+        if (-not $copied.ContainsKey($target)) {
+            Copy-Item -LiteralPath $latest.FullName -Destination $target -Force
+            $copied[$target] = $true
+            Write-Host "Collected: $target"
+        }
     }
 }

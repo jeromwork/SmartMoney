@@ -1,15 +1,18 @@
 #property strict
 #property indicator_chart_window
+#property indicator_plots 1
 #property indicator_buffers 1
-#property indicator_color1 DodgerBlue
+#property indicator_label1 "SmartMoneyZones"
+#property indicator_type1 DRAW_LINE
+#property indicator_color1 clrDodgerBlue
 
 double ZoneBuffer[];
 
 int OnInit()
 {
-    SetIndexBuffer(0, ZoneBuffer);
-    SetIndexStyle(0, DRAW_LINE);
-    IndicatorShortName("SmartMoneyZones");
+    SetIndexBuffer(0, ZoneBuffer, INDICATOR_DATA);
+    PlotIndexSetInteger(0, PLOT_DRAW_TYPE, DRAW_LINE);
+    IndicatorSetString(INDICATOR_SHORTNAME, "SmartMoneyZones");
     return(INIT_SUCCEEDED);
 }
 

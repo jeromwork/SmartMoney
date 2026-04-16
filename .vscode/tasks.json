@@ -14,7 +14,7 @@
       "problemMatcher": []
     },
     {
-      "label": "mt4:install-finam",
+      "label": "mt5:install-finam",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -26,7 +26,7 @@
       "problemMatcher": []
     },
     {
-      "label": "mql4:build-ea",
+      "label": "mql5:build-ea",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -35,14 +35,14 @@
         "-File",
         "${workspaceFolder}\\scripts\\build.ps1",
         "-Source",
-        "${workspaceFolder}\\src\\MQL4\\Experts\\SmartMoneyEA.mq4",
+        "${workspaceFolder}\\src\\MQL5\\Experts\\SmartMoneyEA.mq5",
         "-Terminal",
         "test"
       ],
       "problemMatcher": []
     },
     {
-      "label": "mql4:backtest-ea",
+      "label": "mql5:backtest-ea",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -66,7 +66,7 @@
       "problemMatcher": []
     },
     {
-      "label": "mt4:collect-logs",
+      "label": "mt5:collect-logs",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -80,7 +80,7 @@
       "problemMatcher": []
     },
     {
-      "label": "mt4:launch-demo",
+      "label": "mt5:launch-demo",
       "type": "shell",
       "command": "powershell",
       "args": [

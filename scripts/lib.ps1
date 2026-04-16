@@ -27,7 +27,7 @@ function Get-TerminalRoot {
 }
 
 function Get-SourceRoot {
-    return Join-Path (Get-ProjectRoot) "src/MQL4"
+    return Join-Path (Get-ProjectRoot) "src/MQL5"
 }
 
 function Get-ArtifactPath {
@@ -125,11 +125,11 @@ function Assert-TerminalInstalled {
     $platform = Get-TerminalPlatform -Terminal $Terminal
 
     if (-not $terminalExe -or -not $metaEditorExe -or $platform -eq "unknown") {
-        throw "Terminal mt4-$Terminal is not installed correctly. Install terminal files into the project and rerun scripts/install-finam-terminal.ps1."
+        throw "Terminal $Terminal is not installed correctly. Install terminal files into the project and rerun scripts/install-finam-terminal.ps1."
     }
 
     if ($RequiredPlatform -ne "any" -and $platform -ne $RequiredPlatform) {
-        throw "Terminal mt4-$Terminal platform mismatch: found $platform, required $RequiredPlatform."
+        throw "Terminal $Terminal platform mismatch: found $platform, required $RequiredPlatform."
     }
 }
 
@@ -148,16 +148,16 @@ function Invoke-RobocopyMirror {
     }
 }
 
-function Sync-Mql4Source {
+function Sync-Mql5Source {
     param(
         [Parameter(Mandatory = $true)]
         [ValidateSet("dev", "test", "demo")]
         [string]$Terminal
     )
 
-    Assert-TerminalInstalled -Terminal $Terminal -RequiredPlatform mt4
+    Assert-TerminalInstalled -Terminal $Terminal -RequiredPlatform mt5
     $sourceRoot = Get-SourceRoot
-    $destinationRoot = Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL4"
+    $destinationRoot = Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL5"
     Invoke-RobocopyMirror -Source $sourceRoot -Destination $destinationRoot
 }
 
@@ -190,7 +190,7 @@ function Convert-ToTerminalSourcePath {
 
     $sourceRoot = (Resolve-Path -LiteralPath (Get-SourceRoot)).Path
     $relative = $ResolvedSource.Substring($sourceRoot.Length).TrimStart("\")
-    return Join-Path (Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL4") $relative
+    return Join-Path (Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL5") $relative
 }
 
 function Copy-PresetToTerminal {
@@ -207,8 +207,8 @@ function Copy-PresetToTerminal {
     $presetPath = (Resolve-Path -LiteralPath $presetPath).Path
 
     $presetName = Split-Path -Leaf $presetPath
-    $presetsDir = Join-Path (Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL4") "Presets"
-    $testerDir = Join-Path (Get-TerminalRoot -Terminal $Terminal) "tester"
+    $presetsDir = Join-Path (Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL5") "Profiles/Tester"
+    $testerDir = Join-Path (Get-TerminalRoot -Terminal $Terminal) "Tester"
     Ensure-Directory -Path $presetsDir
     Ensure-Directory -Path $testerDir
     Copy-Item -LiteralPath $presetPath -Destination (Join-Path $presetsDir $presetName) -Force

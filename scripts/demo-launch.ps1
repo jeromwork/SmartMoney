@@ -16,11 +16,11 @@ param(
 . (Join-Path $PSScriptRoot "lib.ps1")
 
 $platform = Get-TerminalPlatform -Terminal demo
-if ($platform -ne "mt4") {
-    throw "Demo launch script currently supports MQL4 EA attachment only. Terminal 'demo' is '$platform'. Install MT4 (MQL4) or migrate project scripts/code to MQL5."
+if ($platform -ne "mt5") {
+    throw "Demo launch script currently supports MQL5 EA attachment only. Terminal 'demo' is '$platform'. Install MT5 (MQL5)."
 }
 
-$sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq4" -f $Expert)
+$sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq5" -f $Expert)
 & (Join-Path $PSScriptRoot "build.ps1") -Source $sourceFile -Terminal demo
 
 $presetName = Copy-PresetToTerminal -Terminal demo -SetFile $SetFile
@@ -53,7 +53,7 @@ ExpertParameters=$presetName
 Set-Content -LiteralPath $configPath -Value $config -Encoding ASCII
 
 Start-Process -FilePath $terminalExe `
-    -ArgumentList @("/portable", $configPath) `
+    -ArgumentList @("/portable", "/config:$configPath") `
     -WorkingDirectory $terminalRoot | Out-Null
 
 Write-Host "Demo terminal launched: $terminalRoot"

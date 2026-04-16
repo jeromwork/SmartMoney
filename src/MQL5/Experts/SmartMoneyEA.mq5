@@ -1,6 +1,6 @@
 #property strict
 
-#include <SmartMoneyCommon.mqh>
+#include "..\Include\SmartMoneyCommon.mqh"
 
 input double InpLots = 0.10;
 input int InpStopLossPoints = 300;

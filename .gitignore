@@ -3,7 +3,9 @@
 
 # Build outputs
 *.ex4
+*.ex5
 *.mq4.bak
+*.mq5.bak
 *.mqh.bak
 
 # Logs and reports
@@ -25,6 +27,10 @@ terminals/**/MQL4/Files/
 terminals/**/MQL4/Logs/
 terminals/**/MQL4/Profiles/
 terminals/**/MQL4/*.dat
+terminals/**/MQL5/Files/
+terminals/**/MQL5/Logs/
+terminals/**/MQL5/Profiles/
+terminals/**/MQL5/*.dat
 terminals/**/bases/
 terminals/**/origin.txt
 terminals/mt4-dev/**

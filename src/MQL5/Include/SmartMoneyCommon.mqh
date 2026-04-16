@@ -3,7 +3,7 @@
 bool SM_IsNewBar()
 {
     static datetime lastBarTime = 0;
-    datetime currentBarTime = iTime(Symbol(), Period(), 0);
+    datetime currentBarTime = iTime(_Symbol, _Period, 0);
     if (currentBarTime == 0)
     {
         return false;
@@ -25,14 +25,14 @@ void SM_Log(string scope, string message)
 
 void SM_LogError(string scope, int code, string message)
 {
-    Print("[SM][", scope, "][ERROR] code=", code, " message=", message);
+    Print("[SM][", scope, "][ERROR] code=", IntegerToString(code), " message=", message);
 }
 
 double SM_NormalizeLots(double lots)
 {
-    double minLot = MarketInfo(Symbol(), MODE_MINLOT);
-    double maxLot = MarketInfo(Symbol(), MODE_MAXLOT);
-    double lotStep = MarketInfo(Symbol(), MODE_LOTSTEP);
+    double minLot = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
+    double maxLot = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MAX);
+    double lotStep = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_STEP);
 
     if (lotStep <= 0.0)
     {
@@ -46,6 +46,11 @@ double SM_NormalizeLots(double lots)
 
 bool SM_IsSpreadAcceptable(double maxSpreadPoints)
 {
-    double spread = MarketInfo(Symbol(), MODE_SPREAD);
-    return spread <= maxSpreadPoints;
+    long spread = 0;
+    if (!SymbolInfoInteger(_Symbol, SYMBOL_SPREAD, spread))
+    {
+        return false;
+    }
+
+    return (double)spread <= maxSpreadPoints;
 }
