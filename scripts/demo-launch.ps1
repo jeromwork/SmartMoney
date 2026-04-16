@@ -10,10 +10,54 @@ param(
     [string]$Template = "demo.tpl",
     [string]$Login = "",
     [string]$Password = "",
-    [string]$Server = ""
+    [string]$Server = "",
+    [string]$EnvFile = ".env"
 )
 
 . (Join-Path $PSScriptRoot "lib.ps1")
+
+function Read-DotEnv {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    $values = @{}
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return $values
+    }
+
+    $lines = Get-Content -LiteralPath $Path
+    foreach ($line in $lines) {
+        if ($line -match '^\s*#') { continue }
+        if ($line -match '^\s*$') { continue }
+        $parts = $line -split '=', 2
+        if ($parts.Count -ne 2) { continue }
+        $key = $parts[0].Trim()
+        $value = $parts[1].Trim()
+        if ($key -ne "") {
+            $values[$key] = $value
+        }
+    }
+
+    return $values
+}
+
+$projectRoot = Get-ProjectRoot
+$envPath = if ([System.IO.Path]::IsPathRooted($EnvFile)) { $EnvFile } else { Join-Path $projectRoot $EnvFile }
+$envValues = Read-DotEnv -Path $envPath
+
+if ([string]::IsNullOrWhiteSpace($Login) -and $envValues.ContainsKey("MT5_LOGIN")) {
+    $Login = $envValues["MT5_LOGIN"]
+}
+
+if ([string]::IsNullOrWhiteSpace($Password) -and $envValues.ContainsKey("MT5_PASSWORD")) {
+    $Password = $envValues["MT5_PASSWORD"]
+}
+
+if ([string]::IsNullOrWhiteSpace($Server) -and $envValues.ContainsKey("MT5_SERVER")) {
+    $Server = $envValues["MT5_SERVER"]
+}
 
 $platform = Get-TerminalPlatform -Terminal demo
 if ($platform -ne "mt5") {

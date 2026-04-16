@@ -1,5 +1,14 @@
-InpLots=0.10
+InpProvidersProfile=sweep_mss_fvg_normal
+InpSymbolsCsv=EURUSD,GBPUSD,USDJPY
+InpTimeframesCsv=M1,M5,M15,H1,H4,D1
+InpRunMode=0
+InpCompositionMode=0
+InpScanIntervalSeconds=5
+InpMinSignalScore=55.0
+InpScoreThreshold=120.0
+InpMaxSpreadPoints=30
 InpStopLossPoints=300
 InpTakeProfitPoints=600
-InpMaxSpreadPoints=30
+InpRiskPerTradePercent=0.5
 InpMagicNumber=9100416
+InpEnableTrading=true
