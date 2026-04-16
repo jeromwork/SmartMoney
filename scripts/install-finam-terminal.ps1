@@ -58,9 +58,7 @@ if (-not $installed) {
 }
 
 $platform = "unknown"
-if (Test-Path -LiteralPath (Join-Path $stagingRoot "MQL4")) {
-    $platform = "mt4"
-} elseif (Test-Path -LiteralPath (Join-Path $stagingRoot "MQL5")) {
+if (Test-Path -LiteralPath (Join-Path $stagingRoot "MQL5")) {
     $platform = "mt5"
 }
 

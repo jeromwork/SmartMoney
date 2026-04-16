@@ -16,26 +16,22 @@ artifacts/**/*.json
 artifacts/**/*.ini
 artifacts/**/*.log
 
-# MT4 generated data
+# MT5 generated data
 terminals/**/config/
 terminals/**/history/
 terminals/**/logs/
 terminals/**/tester/cache/
 terminals/**/tester/history/
 terminals/**/tester/logs/
-terminals/**/MQL4/Files/
-terminals/**/MQL4/Logs/
-terminals/**/MQL4/Profiles/
-terminals/**/MQL4/*.dat
 terminals/**/MQL5/Files/
 terminals/**/MQL5/Logs/
 terminals/**/MQL5/Profiles/
 terminals/**/MQL5/*.dat
 terminals/**/bases/
 terminals/**/origin.txt
-terminals/mt4-dev/**
-terminals/mt4-test/**
-terminals/mt4-demo/**
+terminals/mt5-dev/**
+terminals/mt5-test/**
+terminals/mt5-demo/**
 !terminals/README.md
 artifacts/terminal-staging/**
 

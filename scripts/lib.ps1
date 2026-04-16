@@ -23,7 +23,7 @@ function Get-TerminalRoot {
         [string]$Terminal
     )
 
-    return Join-Path (Get-ProjectRoot) ("terminals/mt4-" + $Terminal)
+    return Join-Path (Get-ProjectRoot) ("terminals/mt5-" + $Terminal)
 }
 
 function Get-SourceRoot {
@@ -100,10 +100,6 @@ function Get-TerminalPlatform {
     )
 
     $terminalRoot = Get-TerminalRoot -Terminal $Terminal
-    if (Test-Path -LiteralPath (Join-Path $terminalRoot "MQL4")) {
-        return "mt4"
-    }
-
     if (Test-Path -LiteralPath (Join-Path $terminalRoot "MQL5")) {
         return "mt5"
     }
@@ -116,7 +112,7 @@ function Assert-TerminalInstalled {
         [Parameter(Mandatory = $true)]
         [ValidateSet("dev", "test", "demo")]
         [string]$Terminal,
-        [ValidateSet("any", "mt4", "mt5")]
+        [ValidateSet("any", "mt5")]
         [string]$RequiredPlatform = "any"
     )
 

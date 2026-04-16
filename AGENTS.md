@@ -26,10 +26,9 @@
   - `src/MQL5/Include`
 - Скрипты автоматизации в `scripts/`.
 - Терминальные слоты:
-  - `terminals/mt4-dev`
-  - `terminals/mt4-test`
-  - `terminals/mt4-demo`
-- Имена слотов исторические (`mt4-*`), но внутри используется `MT5`.
+  - `terminals/mt5-dev`
+  - `terminals/mt5-test`
+  - `terminals/mt5-demo`
 
 ## 3) Что агенту запрещено
 
@@ -70,4 +69,3 @@
 1. `scripts/test-scripts.ps1` без ошибок.
 2. `build.ps1` для измененного `EA/indicator`.
 3. Анализ логов после `backtest/demo` (если запускались).
-
