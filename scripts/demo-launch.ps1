@@ -11,7 +11,8 @@ param(
     [string]$Login = "",
     [string]$Password = "",
     [string]$Server = "",
-    [string]$EnvFile = ".env"
+    [string]$EnvFile = ".env",
+    [string[]]$Indicators = @("SmartMoneyZones")
 )
 
 . (Join-Path $PSScriptRoot "lib.ps1")
@@ -66,6 +67,20 @@ if ($platform -ne "mt5") {
 
 $sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq5" -f $Expert)
 & (Join-Path $PSScriptRoot "build.ps1") -Source $sourceFile -Terminal demo
+
+foreach ($indicator in $Indicators) {
+    if ([string]::IsNullOrWhiteSpace($indicator)) {
+        continue
+    }
+
+    $indicatorSource = Join-Path (Get-SourceRoot) ("Indicators/{0}.mq5" -f $indicator)
+    if (-not (Test-Path -LiteralPath $indicatorSource)) {
+        Write-Warning "Indicator source not found, skip build: $indicatorSource"
+        continue
+    }
+
+    & (Join-Path $PSScriptRoot "build.ps1") -Source $indicatorSource -Terminal demo
+}
 
 $presetName = Copy-PresetToTerminal -Terminal demo -SetFile $SetFile
 $terminalRoot = Get-TerminalRoot -Terminal demo

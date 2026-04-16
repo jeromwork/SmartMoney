@@ -23,6 +23,12 @@ input int InpDashboardY = 70;
 input int InpDashboardWidth = 420;
 input int InpDashboardRowHeight = 20;
 input bool InpShowChartSignalMarkers = true;
+input int InpIndicatorTrendPeriod = 20;
+input bool InpIndicatorShowBuyArrows = true;
+input bool InpIndicatorShowSellArrows = true;
+input double InpIndicatorArrowOffsetPoints = 20.0;
+input int InpIndicatorBuyArrowCode = 233;
+input int InpIndicatorSellArrowCode = 234;
 
 string g_symbols[];
 ENUM_TIMEFRAMES g_timeframes[];
@@ -66,7 +72,16 @@ void SM_RegisterIndicatorHandle(const int handle)
 
 bool SM_AttachIndicatorToChart(const long chart_id, const string symbol, const ENUM_TIMEFRAMES timeframe)
 {
-    int handle = iCustom(symbol, timeframe, "SmartMoneyZones");
+    int handle = iCustom(symbol,
+                         timeframe,
+                         "SmartMoneyZones",
+                         InpIndicatorTrendPeriod,
+                         true,
+                         InpIndicatorShowBuyArrows,
+                         InpIndicatorShowSellArrows,
+                         InpIndicatorArrowOffsetPoints,
+                         InpIndicatorBuyArrowCode,
+                         InpIndicatorSellArrowCode);
     if (handle == INVALID_HANDLE)
     {
         SM_LogError("UI", GetLastError(), "Cannot create SmartMoneyZones handle for " + symbol + " " + SM_TimeframeToString(timeframe));
@@ -276,7 +291,13 @@ bool SM_BuildScanners()
                                    g_timeframes[t],
                                    InpCompositionMode,
                                    InpMinSignalScore,
-                                   InpScoreThreshold);
+                                   InpScoreThreshold,
+                                   InpIndicatorTrendPeriod,
+                                   InpIndicatorShowBuyArrows,
+                                   InpIndicatorShowSellArrows,
+                                   InpIndicatorArrowOffsetPoints,
+                                   InpIndicatorBuyArrowCode,
+                                   InpIndicatorSellArrowCode);
             if (!ok)
             {
                 delete scanner;

@@ -10,6 +10,13 @@ private:
     string m_indicator_name;
     int m_handle;
     string m_state;
+    int m_trend_period;
+    bool m_show_buy_arrows;
+    bool m_show_sell_arrows;
+    bool m_enable_visual_objects;
+    double m_arrow_offset_points;
+    int m_buy_arrow_code;
+    int m_sell_arrow_code;
 
 public:
     CICustomIndicatorProvider()
@@ -19,18 +26,48 @@ public:
         m_indicator_name = "SmartMoneyZones";
         m_handle = INVALID_HANDLE;
         m_state = "not-initialized";
+        m_trend_period = 20;
+        m_show_buy_arrows = true;
+        m_show_sell_arrows = true;
+        m_enable_visual_objects = false;
+        m_arrow_offset_points = 20.0;
+        m_buy_arrow_code = 233;
+        m_sell_arrow_code = 234;
     }
 
-    void Setup(const string indicator_name)
+    void Setup(const string indicator_name,
+               const int trend_period,
+               const bool enable_visual_objects,
+               const bool show_buy_arrows,
+               const bool show_sell_arrows,
+               const double arrow_offset_points,
+               const int buy_arrow_code,
+               const int sell_arrow_code)
     {
         m_indicator_name = indicator_name;
+        m_trend_period = trend_period;
+        m_enable_visual_objects = enable_visual_objects;
+        m_show_buy_arrows = show_buy_arrows;
+        m_show_sell_arrows = show_sell_arrows;
+        m_arrow_offset_points = arrow_offset_points;
+        m_buy_arrow_code = buy_arrow_code;
+        m_sell_arrow_code = sell_arrow_code;
     }
 
     virtual bool Init(const string symbol, const ENUM_TIMEFRAMES timeframe)
     {
         m_symbol = symbol;
         m_timeframe = timeframe;
-        m_handle = iCustom(m_symbol, m_timeframe, m_indicator_name);
+        m_handle = iCustom(m_symbol,
+                           m_timeframe,
+                           m_indicator_name,
+                           m_trend_period,
+                           m_enable_visual_objects,
+                           m_show_buy_arrows,
+                           m_show_sell_arrows,
+                           m_arrow_offset_points,
+                           m_buy_arrow_code,
+                           m_sell_arrow_code);
         if (m_handle == INVALID_HANDLE)
         {
             m_state = "handle-error";

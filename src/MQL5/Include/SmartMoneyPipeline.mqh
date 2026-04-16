@@ -347,6 +347,12 @@ public:
                         const string symbol,
                         const ENUM_TIMEFRAMES timeframe,
                         const double min_score,
+                        const int trend_period,
+                        const bool show_buy_arrows,
+                        const bool show_sell_arrows,
+                        const double arrow_offset_points,
+                        const int buy_arrow_code,
+                        const int sell_arrow_code,
                         IIndicatorProvider *&indicator_providers[],
                         ISignalProvider *&signal_providers[])
     {
@@ -354,7 +360,14 @@ public:
         ArrayResize(signal_providers, 0);
 
         CICustomIndicatorProvider *icustom = new CICustomIndicatorProvider();
-        icustom.Setup("SmartMoneyZones");
+        icustom.Setup("SmartMoneyZones",
+                      trend_period,
+                      false,
+                      show_buy_arrows,
+                      show_sell_arrows,
+                      arrow_offset_points,
+                      buy_arrow_code,
+                      sell_arrow_code);
         if (icustom.Init(symbol, timeframe))
         {
             int idx = ArraySize(indicator_providers);
@@ -425,13 +438,30 @@ public:
               const ENUM_TIMEFRAMES timeframe,
               const ENUM_SM_COMPOSITION composition_mode,
               const double min_score,
-              const double score_threshold)
+              const double score_threshold,
+              const int trend_period,
+              const bool show_buy_arrows,
+              const bool show_sell_arrows,
+              const double arrow_offset_points,
+              const int buy_arrow_code,
+              const int sell_arrow_code)
     {
         m_symbol = symbol;
         m_timeframe = timeframe;
         m_last_bar_time = 0;
 
-        if (!registry.BuildProviders(profile, symbol, timeframe, min_score, m_indicator_providers, m_signal_providers))
+        if (!registry.BuildProviders(profile,
+                                     symbol,
+                                     timeframe,
+                                     min_score,
+                                     trend_period,
+                                     show_buy_arrows,
+                                     show_sell_arrows,
+                                     arrow_offset_points,
+                                     buy_arrow_code,
+                                     sell_arrow_code,
+                                     m_indicator_providers,
+                                     m_signal_providers))
         {
             return false;
         }
