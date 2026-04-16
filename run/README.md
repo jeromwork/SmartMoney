@@ -7,6 +7,7 @@
 `<mode>__<ea_name>__<version>__<usecase>.bat`
 
 Запускать (рабочие сценарии):
+- `install__mt5__dev_test_demo.bat`
 - `manual__smartmoneyea__v1__demo.bat`
 - `manual__smartmoneyea__v1__multitf.bat`
 - `testerui__smartmoneyea__v1__eurusd_h1.bat`

@@ -1,11 +1,18 @@
 param(
-    [string]$InstallerPath = (Join-Path ([System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))) "downloads/finam5setup.exe")
+    [string]$InstallerPath = (Join-Path ([System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))) "downloads/mt5setup.exe")
 )
 
 . (Join-Path $PSScriptRoot "lib.ps1")
 
 $projectRoot = Get-ProjectRoot
 $stagingRoot = Join-Path $projectRoot "artifacts/terminal-staging"
+
+if (-not (Test-Path -LiteralPath $InstallerPath)) {
+    $fallbackInstallerPath = (Join-Path ([System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))) "downloads/finam5setup.exe")
+    if (Test-Path -LiteralPath $fallbackInstallerPath) {
+        $InstallerPath = $fallbackInstallerPath
+    }
+}
 
 if (-not (Test-Path -LiteralPath $InstallerPath)) {
     throw "Installer not found: $InstallerPath"

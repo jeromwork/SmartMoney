@@ -47,6 +47,7 @@ data/ticks/**/*.zip
 downloads/*.exe
 downloads/*.msi
 downloads/*.zip
+!downloads/mt5setup.exe
 
 # OS / editor noise
 Thumbs.db

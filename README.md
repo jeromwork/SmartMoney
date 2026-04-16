@@ -13,8 +13,8 @@
 
 ## Что нужно для сборки и тестов
 
-1. Положить брокерский инсталлятор в `downloads/mt5setup.exe` или передать путь в `scripts/install-finam-terminal.ps1 -InstallerPath ...`
-2. Запустить `scripts/install-finam-terminal.ps1`
+1. Использовать инсталлятор из репозитория `downloads/mt5setup.exe` или передать путь в `scripts/install-finam-terminal.ps1 -InstallerPath ...`
+2. Запустить `scripts/install-finam-terminal.ps1` (или `run/install__mt5__dev_test_demo.bat`)
 3. Убедиться, что в терминале есть каталог `MQL5`
 4. При необходимости открыть `mt5-dev` и подключить demo/real сервер брокера для подкачки истории
 5. Использовать VSCode tasks или PowerShell-скрипты напрямую
