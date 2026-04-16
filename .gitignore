@@ -27,6 +27,11 @@ terminals/**/MQL4/Profiles/
 terminals/**/MQL4/*.dat
 terminals/**/bases/
 terminals/**/origin.txt
+terminals/mt4-dev/**
+terminals/mt4-test/**
+terminals/mt4-demo/**
+!terminals/README.md
+artifacts/terminal-staging/**
 
 # Local market data
 data/broker/**

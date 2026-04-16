@@ -15,12 +15,17 @@ param(
 
 . (Join-Path $PSScriptRoot "lib.ps1")
 
+$platform = Get-TerminalPlatform -Terminal demo
+if ($platform -ne "mt4") {
+    throw "Demo launch script currently supports MQL4 EA attachment only. Terminal 'demo' is '$platform'. Install MT4 (MQL4) or migrate project scripts/code to MQL5."
+}
+
 $sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq4" -f $Expert)
 & (Join-Path $PSScriptRoot "build.ps1") -Source $sourceFile -Terminal demo
 
 $presetName = Copy-PresetToTerminal -Terminal demo -SetFile $SetFile
 $terminalRoot = Get-TerminalRoot -Terminal demo
-$terminalExe = Get-ExecutablePath -Terminal demo -ExecutableName "terminal.exe"
+$terminalExe = Get-TerminalExecutable -Terminal demo -Kind terminal
 $timestamp = New-Timestamp
 $configPath = Get-ArtifactPath -RelativePath ("artifacts/demo-{0}.ini" -f $timestamp)
 

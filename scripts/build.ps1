@@ -7,10 +7,15 @@ param(
 
 . (Join-Path $PSScriptRoot "lib.ps1")
 
+$platform = Get-TerminalPlatform -Terminal $Terminal
+if ($platform -ne "mt4") {
+    throw "Build script currently supports MQL4 only. Terminal '$Terminal' is '$platform'. Install MT4 (MQL4) or migrate project scripts/code to MQL5."
+}
+
 $resolvedSource = Resolve-SourceFile -Source $Source
 Sync-Mql4Source -Terminal $Terminal
 
-$metaEditor = Get-ExecutablePath -Terminal $Terminal -ExecutableName "metaeditor.exe"
+$metaEditor = Get-TerminalExecutable -Terminal $Terminal -Kind metaeditor
 if (-not $metaEditor) {
     throw "MetaEditor not found for terminal '$Terminal'."
 }

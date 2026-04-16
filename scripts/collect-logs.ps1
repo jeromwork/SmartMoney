@@ -6,13 +6,15 @@ param(
 . (Join-Path $PSScriptRoot "lib.ps1")
 
 $terminalRoot = Get-TerminalRoot -Terminal $Terminal
-Assert-TerminalInstalled -Terminal $Terminal
+Assert-TerminalInstalled -Terminal $Terminal -RequiredPlatform any
 $timestamp = New-Timestamp
 
 $mappings = @(
     @{ Source = Join-Path $terminalRoot "logs"; Destination = "logs/terminal" },
     @{ Source = Join-Path $terminalRoot "tester/logs"; Destination = "logs/tester" },
-    @{ Source = Join-Path $terminalRoot "MQL4/Logs"; Destination = "logs/experts" }
+    @{ Source = Join-Path $terminalRoot "Tester/logs"; Destination = "logs/tester" },
+    @{ Source = Join-Path $terminalRoot "MQL4/Logs"; Destination = "logs/experts" },
+    @{ Source = Join-Path $terminalRoot "MQL5/Logs"; Destination = "logs/experts" }
 )
 
 foreach ($mapping in $mappings) {

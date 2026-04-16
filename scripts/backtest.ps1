@@ -19,12 +19,17 @@ param(
 
 . (Join-Path $PSScriptRoot "lib.ps1")
 
+$platform = Get-TerminalPlatform -Terminal test
+if ($platform -ne "mt4") {
+    throw "Backtest script currently supports MQL4 only. Terminal 'test' is '$platform'. Install MT4 (MQL4) or migrate project scripts/code to MQL5."
+}
+
 $sourceFile = Join-Path (Get-SourceRoot) ("Experts/{0}.mq4" -f $Expert)
 & (Join-Path $PSScriptRoot "build.ps1") -Source $sourceFile -Terminal test
 
 $presetName = Copy-PresetToTerminal -Terminal test -SetFile $SetFile
 $terminalRoot = Get-TerminalRoot -Terminal test
-$terminalExe = Get-ExecutablePath -Terminal test -ExecutableName "terminal.exe"
+$terminalExe = Get-TerminalExecutable -Terminal test -Kind terminal
 
 $timestamp = New-Timestamp
 $reportBaseName = "{0}-{1}-{2}-{3}" -f $Expert, $Symbol, $Period, $timestamp

@@ -65,19 +65,71 @@ function Get-ExecutablePath {
     return $match.FullName
 }
 
-function Assert-TerminalInstalled {
+function Get-TerminalExecutable {
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("dev", "test", "demo")]
+        [string]$Terminal,
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("terminal", "metaeditor")]
+        [string]$Kind
+    )
+
+    $candidates = @()
+    if ($Kind -eq "terminal") {
+        $candidates = @("terminal.exe", "terminal64.exe")
+    } elseif ($Kind -eq "metaeditor") {
+        $candidates = @("metaeditor.exe", "MetaEditor.exe", "MetaEditor64.exe")
+    }
+
+    foreach ($name in $candidates) {
+        $path = Get-ExecutablePath -Terminal $Terminal -ExecutableName $name
+        if ($path) {
+            return $path
+        }
+    }
+
+    return $null
+}
+
+function Get-TerminalPlatform {
     param(
         [Parameter(Mandatory = $true)]
         [ValidateSet("dev", "test", "demo")]
         [string]$Terminal
     )
 
-    $terminalExe = Get-ExecutablePath -Terminal $Terminal -ExecutableName "terminal.exe"
-    $metaEditorExe = Get-ExecutablePath -Terminal $Terminal -ExecutableName "metaeditor.exe"
-    $mql4Dir = Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL4"
+    $terminalRoot = Get-TerminalRoot -Terminal $Terminal
+    if (Test-Path -LiteralPath (Join-Path $terminalRoot "MQL4")) {
+        return "mt4"
+    }
 
-    if (-not $terminalExe -or -not $metaEditorExe -or -not (Test-Path -LiteralPath $mql4Dir)) {
-        throw "Terminal mt4-$Terminal is not installed or does not look like MT4/MQL4. Put the broker installer into downloads/finam5setup.exe and run scripts/install-finam-terminal.ps1."
+    if (Test-Path -LiteralPath (Join-Path $terminalRoot "MQL5")) {
+        return "mt5"
+    }
+
+    return "unknown"
+}
+
+function Assert-TerminalInstalled {
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("dev", "test", "demo")]
+        [string]$Terminal,
+        [ValidateSet("any", "mt4", "mt5")]
+        [string]$RequiredPlatform = "any"
+    )
+
+    $terminalExe = Get-TerminalExecutable -Terminal $Terminal -Kind terminal
+    $metaEditorExe = Get-TerminalExecutable -Terminal $Terminal -Kind metaeditor
+    $platform = Get-TerminalPlatform -Terminal $Terminal
+
+    if (-not $terminalExe -or -not $metaEditorExe -or $platform -eq "unknown") {
+        throw "Terminal mt4-$Terminal is not installed correctly. Install terminal files into the project and rerun scripts/install-finam-terminal.ps1."
+    }
+
+    if ($RequiredPlatform -ne "any" -and $platform -ne $RequiredPlatform) {
+        throw "Terminal mt4-$Terminal platform mismatch: found $platform, required $RequiredPlatform."
     }
 }
 
@@ -103,7 +155,7 @@ function Sync-Mql4Source {
         [string]$Terminal
     )
 
-    Assert-TerminalInstalled -Terminal $Terminal
+    Assert-TerminalInstalled -Terminal $Terminal -RequiredPlatform mt4
     $sourceRoot = Get-SourceRoot
     $destinationRoot = Join-Path (Get-TerminalRoot -Terminal $Terminal) "MQL4"
     Invoke-RobocopyMirror -Source $sourceRoot -Destination $destinationRoot
