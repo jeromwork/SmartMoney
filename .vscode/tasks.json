@@ -1,0 +1,121 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "scripts:validate",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\test-scripts.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "mt4:install-finam",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\install-finam-terminal.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "mql4:build-ea",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\build.ps1",
+        "-Source",
+        "${workspaceFolder}\\src\\MQL4\\Experts\\SmartMoneyEA.mq4",
+        "-Terminal",
+        "test"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "mql4:backtest-ea",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\backtest.ps1",
+        "-Expert",
+        "SmartMoneyEA",
+        "-Symbol",
+        "EURUSD",
+        "-Period",
+        "H1",
+        "-SetFile",
+        "SmartMoneyEA.set",
+        "-From",
+        "2024.01.01",
+        "-To",
+        "2024.12.31"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "mt4:collect-logs",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\collect-logs.ps1",
+        "-Terminal",
+        "test"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "mt4:launch-demo",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\demo-launch.ps1",
+        "-Expert",
+        "SmartMoneyEA",
+        "-Symbol",
+        "EURUSD",
+        "-Period",
+        "H1",
+        "-SetFile",
+        "SmartMoneyEA.set"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "data:sync-from-broker",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\sync-data.ps1",
+        "-Terminal",
+        "test",
+        "-Source",
+        "broker",
+        "-Symbol",
+        "EURUSD"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

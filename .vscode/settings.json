@@ -1,0 +1,18 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/artifacts/**": false,
+    "**/terminals/**/history/**": true,
+    "**/terminals/**/logs/**": true,
+    "**/terminals/**/tester/cache/**": true,
+    "**/terminals/**/tester/history/**": true
+  },
+  "search.exclude": {
+    "**/terminals/**": true,
+    "**/logs/**": true,
+    "**/reports/**": true,
+    "**/artifacts/**": true
+  },
+  "terminal.integrated.cwd": "C:\\work\\MQL\\SmartMoney",
+  "powershell.cwd": "C:\\work\\MQL\\SmartMoney"
+}

@@ -1,0 +1,46 @@
+.vscode/*.code-workspace
+.vscode/.ropeproject/
+
+# Build outputs
+*.ex4
+*.mq4.bak
+*.mqh.bak
+
+# Logs and reports
+logs/**/*.log
+reports/**/*.htm
+reports/**/*.html
+artifacts/**/*.json
+artifacts/**/*.ini
+artifacts/**/*.log
+
+# MT4 generated data
+terminals/**/config/
+terminals/**/history/
+terminals/**/logs/
+terminals/**/tester/cache/
+terminals/**/tester/history/
+terminals/**/tester/logs/
+terminals/**/MQL4/Files/
+terminals/**/MQL4/Logs/
+terminals/**/MQL4/Profiles/
+terminals/**/MQL4/*.dat
+terminals/**/bases/
+terminals/**/origin.txt
+
+# Local market data
+data/broker/**
+data/import/**/*.hst
+data/import/**/*.fxt
+data/import/**/*.csv
+data/ticks/**/*.csv
+data/ticks/**/*.zip
+
+# Installers
+downloads/*.exe
+downloads/*.msi
+downloads/*.zip
+
+# OS / editor noise
+Thumbs.db
+Desktop.ini
